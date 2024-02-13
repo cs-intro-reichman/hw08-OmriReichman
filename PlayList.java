@@ -160,7 +160,7 @@ class PlayList {
      *  If start is negative or greater than size - 1, returns -1.
      */
     private int minIndex(int start) {
-        if ((start < 0) || (start > size + 1)) {
+        if ((start < 0) || (start > size - 1)) {
             return -1;  
         }
             int min = tracks[start].getDuration();
@@ -189,10 +189,8 @@ class PlayList {
         // calling the minIndex method in each iteration.
         for (int i = 0; i < size; i++) {
             Track temp = tracks [i];
-           if (minIndex(i) != 0) {
             tracks [i] = tracks [minIndex(i)];
             tracks [minIndex(i)] = temp;
-           }
         }
     }
 }
