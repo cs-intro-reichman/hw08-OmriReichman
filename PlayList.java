@@ -189,8 +189,10 @@ class PlayList {
         // calling the minIndex method in each iteration.
         for (int i = 0; i < size; i++) {
             Track temp = tracks [i];
+           if (minIndex(i) != 0) {
             tracks [i] = tracks [minIndex(i)];
             tracks [minIndex(i)] = temp;
+           }
         }
     }
 }
