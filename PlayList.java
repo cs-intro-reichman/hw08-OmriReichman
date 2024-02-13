@@ -67,7 +67,7 @@ class PlayList {
     /** Returns the total duration (in seconds) of all the tracks in this list.*/
     public int totalDuration() {
         int totalDuration = 0;
-        for (int i = 0; i < size; i ++) {
+        for (int i = 0; i < size; i++) {
             int duration = tracks[i].getDuration();
             totalDuration = totalDuration + duration;
         }
@@ -93,7 +93,7 @@ class PlayList {
      *  returns true. */
     public boolean add(int i, Track track) {
 
-        if ((size == 0) || (size == i)) {
+        if ((size == 0) || (i == size)) {
             add(track);
             return true;
         } else if ((i >= 0) && (i < size) && (size < maxSize)) {
@@ -111,9 +111,9 @@ class PlayList {
      *  If the list is empty, or the given index is negative or too big for this list, 
      *  does nothing and returns -1. */
     public void remove(int i) {
-        if ((size > 0) && (i >= 0) && (i < size)) {
+        if ((size > 0) && (i >= 0) && (i <= size)) {
             for (int j = size - 1; j >= i; j--) {
-                tracks [j] = tracks[j+1];
+                tracks [j] = tracks[j + 1];
             }
             tracks [size - 1] = null;
             size--;
@@ -125,19 +125,19 @@ class PlayList {
      *  If such a track is not found, or the list is empty, or the given index
      *  is negative or too big for this list, does nothing. */
     public void remove(String title) {
-       int index = indexOf(title);
-        if ((index >= 0)) {
-            remove(index);
+        if ((indexOf(title) != -1)) {
+            remove(indexOf(title));
         }
     }
 
     /** Removes the first track from this list. If the list is empty, does nothing. */
     public void removeFirst() {
         if (size > 0) {
-            for (int i = size; i >= 0; i--) {
+            for (int i = 0; i < size - 1; i++) {
                 tracks [i] = tracks [i + 1];
             }
-            remove(size - 1);
+            tracks [size - 1] = null;
+            size--;
         }
     }
     
