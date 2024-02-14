@@ -36,7 +36,7 @@ class PlayList {
      *  Otherwise, appends the track and returns true. */
     public boolean add(Track track) {
         
-        if (size + 1 <= maxSize) {
+        if (size < maxSize) {
             tracks [size] = track;
             size++;
             return true;
@@ -57,8 +57,8 @@ class PlayList {
 
     /** Removes the last track from this list. If the list is empty, does nothing. */
      public void removeLast() {
-        if (size>0) {
-            tracks [size - 1] = null;
+        if (size !=0) {
+            tracks [size] = null;
             size--;
         }
         
@@ -66,12 +66,11 @@ class PlayList {
     
     /** Returns the total duration (in seconds) of all the tracks in this list.*/
     public int totalDuration() {
-        int totalDuration = 0;
+        int duration = 0;
         for (int i = 0; i < size; i++) {
-            int duration = tracks[i].getDuration();
-            totalDuration = totalDuration + duration;
+            duration = duration + tracks[i].getDuration();
         }
-        return totalDuration;
+        return duration;
     }
 
     /** Returns the index of the track with the given title in this list.
@@ -111,11 +110,11 @@ class PlayList {
      *  If the list is empty, or the given index is negative or too big for this list, 
      *  does nothing and returns -1. */
     public void remove(int i) {
-        if ((size > 0) && (i >= 0) && (i <= size)) {
-            for (int j = size - 1; j >= i; j--) {
-                tracks [j] = tracks[j + 1];
+        if ((size > 0) && (i >= 0) && (i < size)) {
+            tracks[i]= null;
+            for (int j = i; j < size; j++) {
+                tracks[j] = tracks [j + 1];
             }
-            tracks [size - 1] = null;
             size--;
         }
         return;
@@ -187,11 +186,11 @@ class PlayList {
     public void sortedInPlace() {
         // Uses the selection sort algorithm,  
         // calling the minIndex method in each iteration.
+        Track temp = new Track ("", "", 0);
         for (int i = 0; i < size; i++) {
-            int tempMinIndex = minIndex(i);
-            Track temp = tracks [i];
-            tracks [i] = tracks [tempMinIndex];
-            tracks [tempMinIndex] = temp;
+            temp = tracks[minIndex(i)];
+            tracks [minIndex(i)] = tracks[i];
+            tracks[i] = temp;
         }
     }
 }
